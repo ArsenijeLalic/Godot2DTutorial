@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://w4kesbsa7g0p"]
 
 [ext_resource type="Texture2D" uid="uid://cmijbeceh1wjj" path="res://Assets/dodge_the_creeps_2d_assets/art/playerGrey_up1.png" id="1_hqtel"]
+[ext_resource type="Script" uid="uid://d27fvx010okxn" path="res://player.gd" id="1_sweqy"]
 [ext_resource type="Texture2D" uid="uid://dlrca4jdtcrfa" path="res://Assets/dodge_the_creeps_2d_assets/art/playerGrey_up2.png" id="2_sweqy"]
 [ext_resource type="Texture2D" uid="uid://butyfyasuixof" path="res://Assets/dodge_the_creeps_2d_assets/art/playerGrey_walk1.png" id="3_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://cla4o6i1emw1d" path="res://Assets/dodge_the_creeps_2d_assets/art/playerGrey_walk2.png" id="4_1jxqw"]
@@ -35,6 +36,7 @@ radius = 26.0
 height = 66.0
 
 [node name="Player" type="Area2D" unique_id=845970472]
+script = ExtResource("1_sweqy")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1379615735]
@@ -44,3 +46,5 @@ animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1621407620]
 shape = SubResource("CapsuleShape2D_b26j0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
