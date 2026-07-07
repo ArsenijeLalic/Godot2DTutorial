@@ -3,22 +3,17 @@ extends Node
 @export var mob_scene: PackedScene
 @onready var score = 0
 var paused: bool
-
-func _ready() -> void:
-	new_game()
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("restart") and paused == true:
-		paused = false
-		new_game()
+@onready var hud = $HUD
 
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
-	paused = true
+	hud.game_over()
 	
 func new_game():
 	score = 0
+	hud.update_score(score)
+	hud.show_message("Get Ready!")
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 
@@ -44,6 +39,7 @@ func _on_mob_timer_timeout() -> void:
 
 func _on_score_timer_timeout() -> void:
 	score+=1
+	hud.update_score(score)
 
 
 func _on_start_timer_timeout() -> void:
