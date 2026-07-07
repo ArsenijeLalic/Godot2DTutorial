@@ -2,13 +2,20 @@ extends Node
 
 @export var mob_scene: PackedScene
 @onready var score = 0
+var paused: bool
 
 func _ready() -> void:
 	new_game()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("restart") and paused == true:
+		paused = false
+		new_game()
+
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	paused = true
 	
 func new_game():
 	score = 0
