@@ -4,11 +4,16 @@ extends Node
 @onready var score = 0
 var paused: bool
 @onready var hud = $HUD
+var volume_change = 15
 
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	hud.game_over()
+	$DeathSound.play()
+	$Music.volume_db-=volume_change
+	await get_tree().create_timer(2.0).timeout
+	$Music.volume_db+=volume_change
 	
 func new_game():
 	score = 0
@@ -16,6 +21,7 @@ func new_game():
 	hud.show_message("Get Ready!")
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
+	get_tree().call_group("mobs","queue_free")
 
 
 func _on_mob_timer_timeout() -> void:
